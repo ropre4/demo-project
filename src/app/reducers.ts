@@ -29,7 +29,7 @@ const rootReducers = (history: History) => combineReducers({
 export const appHistory = H.createBrowserHistory();
 
 
- const actionMiddleware = ({dispatch, getState}) => next => (action) => { //TODO: intervept Pending/Success/Failure actions to display Toastr notifications
+ const actionMiddleware = ({dispatch, getState}) => next => (action) => { //TODO: intercept Pending/Success/Failure actions to display Toastr notifications
     return next({...action});
 };
 
