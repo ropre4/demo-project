@@ -1,5 +1,13 @@
 {
   "common": {
-    "motto": "Best Food, Best Delivery"
+    "motto": "Best Food, Best Delivery",
+    "login": "Login"
+  },
+  "login_form": {
+    "welcome": "Welcome back to",
+    "new_user1": "New to FoodDelivery?",
+    "new_user2": "Create an account",
+    "email": "Email",
+    "password": "Password"
   }
 }

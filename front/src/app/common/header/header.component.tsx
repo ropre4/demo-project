@@ -1,10 +1,11 @@
 import * as React from "react";
 import {useTranslation} from "react-i18next";
-import {RootStateStore} from "../app/reducers";
+import {RootStateStore} from "../../reducers";
 import {Dispatch} from "redux";
-import {IAction, LoginAction} from "../app/user/user.actions";
+import {IAction, LoginAction} from "../../user/user.actions";
 import {connect} from "react-redux";
-import Button from "@material-ui/core/Button/Button";
+import './header.css'
+import {useHistory} from "react-router";
 
 function mapStateToProps(state: RootStateStore): HeaderStateProps {
     return {
@@ -31,11 +32,17 @@ export interface IHeaderProps extends HeaderStateProps, HeaderDispatcher {
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
 function HeaderComponent(props: IHeaderProps) {
     const {t} = useTranslation();
+    const history = useHistory();
 
-
-    return <div>
-        {t('common:motto')}
-        <Button color="secondary" variant="outlined"  onClick={props.login}>LOGIN</Button>
+    return <div className={"fd-header"}>
+        <div className={"fd-header-logo"}>
+            <span>Food</span>
+            <span className={"fd-header-logo-accent"}>Delivery</span>
+        </div>
+        <div className={"fd-header-motto"}>{t('common:motto')}</div>
+        <div className={"fd-header-login-button"} onClick={()=>history.push("/login")}>
+            {t('common:login')}
+        </div>
 
     </div>;
 }
