@@ -1,0 +1,51 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "fdadmin",
+    "password": "pd&lG^M*A1ig&1&iUv21",
+    "database": "fd_main",
+    "logging": false,
+    "entities": [
+      "src/entities/*"
+    ],
+    "subscribers": [
+      "src/subscribers/*"
+    ],
+    "migrations": [
+      "src/migrations/*"
+    ],
+    "cli": {
+      "entitiesDir": "src/entities",
+      "migrationsDir": "src/migrations",
+      "subscribersDir": "src/subscribers"
+    }
+  },
+  {
+    "name": "e2e",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "fdadmin",
+    "password": "pd&lG^M*A1ig&1&iUv21",
+    "database": "fd_test",
+    "logging": false,
+    "synchronize": true,
+    "entities": [
+      "src/entities/*"
+    ],
+    "subscribers": [
+      "src/subscribers/*"
+    ],
+    "migrations": [
+      "src/migrations/*"
+    ],
+    "cli": {
+      "entitiesDir": "src/entities",
+      "migrationsDir": "src/migrations",
+      "subscribersDir": "src/subscribers"
+    }
+  }
+]
