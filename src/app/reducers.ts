@@ -5,7 +5,7 @@ import createSagaMiddleware from '@redux-saga/core';
 import {connectRouter, routerMiddleware, RouterState} from 'connected-react-router';
 import * as H from "history";
 import {History} from "history";
-import {UserReducer, UserState} from "../user/user.reducer";
+import {UserReducer, UserState} from "./user/user.reducer";
 
 const logger = createLogger({
     collapsed: () => true

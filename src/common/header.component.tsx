@@ -2,7 +2,7 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {RootStateStore} from "../app/reducers";
 import {Dispatch} from "redux";
-import {IAction, LoginAction} from "../user/user.actions";
+import {IAction, LoginAction} from "../app/user/user.actions";
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 
