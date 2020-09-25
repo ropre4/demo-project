@@ -11,6 +11,12 @@
 }
 .fd-header-logo {
     font-size: 36px;
+    width: 250px;
+}
+.fd-header-user-block {
+    width: 250px;
+    display: flex;
+    justify-content: flex-end;
 }
 .fd-header-logo-accent {
     color: #FC82B3;

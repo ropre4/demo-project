@@ -40,9 +40,10 @@ function HeaderComponent(props: IHeaderProps) {
             <span className={"fd-header-logo-accent"}>Delivery</span>
         </div>
         <div className={"fd-header-motto"}>{t('common:motto')}</div>
-        <div className={"fd-header-login-button"} onClick={()=>history.push("/login")}>
-            {t('common:login')}
+        <div className="fd-header-user-block">
+            <div className={"fd-header-login-button"} onClick={()=>history.push("/login")}>
+                {t('common:login')}
+            </div>
         </div>
-
     </div>;
 }

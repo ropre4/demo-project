@@ -9,5 +9,10 @@
     "new_user2": "Create an account",
     "email": "Email",
     "password": "Password"
+  },
+  "register_form": {
+    "welcome": "Let's create a new account",
+    "already_registered1": "Already have an account?",
+    "already_registered2": "Sign in here"
   }
 }
