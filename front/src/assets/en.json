@@ -22,6 +22,7 @@
     "repeat_password": "Repeat Password",
     "create_account": "Create Account",
     "customer": "I WANT TO BE A CUSTOMER",
-    "owner": "I OWN A RESTAURANT"
+    "owner": "I OWN A RESTAURANT",
+    "error_repeat_password": "password does not match"
   }
 }
