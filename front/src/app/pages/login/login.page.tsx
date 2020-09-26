@@ -11,7 +11,7 @@ export default function LoginPage() {
     const {t} = useTranslation();
 
     return <div className="login-container">
-        <Paper elevation={0} className="form-container">
+        <Paper elevation={0} className="form-container" style={{marginTop: 50}}>
             <Grid item className="form-title">{t('login_form:welcome')} Food<span className="accent-logo">Delivery</span>!</Grid>
             <Grid container>
                 <Grid container className="form-item">

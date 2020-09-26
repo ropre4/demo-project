@@ -1,5 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
+import { useHistory } from "react-router";
 import {findIndex, values} from "ramda";
 import Grid from "@material-ui/core/Grid/Grid";
 import {useTranslation} from "react-i18next";
@@ -11,24 +12,35 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Tabs from "@material-ui/core/Tabs/Tabs";
 import Tab from "@material-ui/core/Tab/Tab";
 import {IRegisterUser, IRegisterUserErrors, RegisterUser, UserRole} from "../../user/registerUser";
+import {LoaderComponent} from "../../common/loader/loader.component";
 
-export default function RegisterPage() {
+export interface IRegisterPageProps {
+    loading: boolean
+}
+
+export interface IRegisterPageDispatcher {
+    register: (user: IRegisterUser, done: Function) => void;
+}
+
+interface Props extends IRegisterPageProps, IRegisterPageDispatcher {}
+
+export default function RegisterPage(props: Props) {
     const {t} = useTranslation();
+    const history = useHistory();
     const [user, setUser] = useState<IRegisterUser>(RegisterUser.InitRegisterUser());
     const [errors, setErrors] = useState<IRegisterUserErrors>(RegisterUser.InitErrors());
 
     const onCreate = (user: IRegisterUser) => {
         const err = RegisterUser.ValidateRegisterUser(user);
-        if(findIndex(el=>el===true)(values(err))!==-1) {
-            setErrors(err);
-            console.log(err)
-        } else {
-            //
+        setErrors(err);
+        if(findIndex(el=>el===true)(values(err))===-1) {
+            props.register(user, ()=>history.push("/"));
         }
-    }
+    };
 
     return <div className="register-container">
-        <Paper elevation={0} className="form-container">
+        {props.loading ? <LoaderComponent /> :
+        <Paper elevation={0} className="form-container" style={{marginTop: 50}}>
             <Grid item className="form-title">{t('register_form:welcome')}</Grid>
             <Grid container>
                 <Grid container className="form-item">
@@ -84,6 +96,6 @@ export default function RegisterPage() {
             <Grid item className="form-footer">
                 {t('register_form:already_registered1')} <Link href="/login" color="secondary">{t('register_form:already_registered2')}</Link>
             </Grid>
-        </Paper>
+        </Paper> }
     </div>
 }

@@ -9,10 +9,10 @@ import {appHistory, store} from "./reducers";
 import HeaderComponent from "./common/header/header.component";
 import {Provider} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
-import LinearProgress from "@material-ui/core/LinearProgress/LinearProgress";
+import {LoaderComponent} from "./common/loader/loader.component";
 
 const LoginPage = lazy(()=>import('./pages/login/login.page'));
-const RegisterPage = lazy(()=>import('./pages/register/register.page'));
+const RegisterPage = lazy(()=>import('./pages/register/register.container'));
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
                     <ConnectedRouter history={appHistory}>
                         <div className="App">
                             <HeaderComponent/>
-                            <Suspense fallback={<LinearProgress color="secondary" />}>
+                            <Suspense fallback={<LoaderComponent />}>
                                 <Switch>
                                     <Route exact path={"/login"} component={LoginPage}/>
                                     <Route exact path={"/register"} component={RegisterPage}/>

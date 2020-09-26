@@ -10,13 +10,13 @@ import {
 } from "inversify-express-utils";
 import { Repository } from "typeorm";
 import { Movie } from "../entities/movie";
-import { TYPE } from "../constants/types";
+import { REPOSITORY_TYPE } from "../constants/repository.types";
 
 @controller("/api/v1/movies")
 export class MovieController {
     private readonly _movieRepository: Repository<Movie>;
     public constructor(
-        @inject(TYPE.MovieRepository)movieRepository: Repository<Movie>
+        @inject(REPOSITORY_TYPE.MovieRepository)movieRepository: Repository<Movie>
     ) {
         this._movieRepository = movieRepository;
     }
