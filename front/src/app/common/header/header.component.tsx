@@ -13,24 +13,18 @@ function mapStateToProps(state: RootStateStore): HeaderStateProps {
     }
 }
 function mapDispatchToProps(dispatch: Dispatch<IAction>): HeaderDispatcher {
-    return {
-        login: () => dispatch(new LoginAction())
-    }
+    return {}
 }
-
 
 export interface HeaderStateProps {
     loading: boolean
 }
-export interface HeaderDispatcher {
-    login: ()=>void
-}
-export interface IHeaderProps extends HeaderStateProps, HeaderDispatcher {
+export interface HeaderDispatcher {}
 
-}
+interface Props extends HeaderStateProps, HeaderDispatcher {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
-function HeaderComponent(props: IHeaderProps) {
+function HeaderComponent(props: Props) {
     const {t} = useTranslation();
     const history = useHistory();
 

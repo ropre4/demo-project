@@ -10,6 +10,8 @@ export enum UserRole {
     RESTAURANT_OWNER = 1
 }
 
+export const UserSensitiveFields = ['password'];
+
 @Entity()
 @Unique(['email'])
 export class User {

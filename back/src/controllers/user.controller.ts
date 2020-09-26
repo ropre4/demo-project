@@ -9,7 +9,10 @@ import {
 } from "inversify-express-utils";
 import {UserService} from "../services/user.service";
 import {SERVICE_TYPE} from "../constants/service.types";
-import {RegisterUserDTO} from "../dto/registerUserDTO";
+import {RegisterUserDTO} from "../dto/userDTO";
+
+import * as jwt from "jsonwebtoken";
+const accessTokenSecret = 'O1#QygYh4Ml2u#AGn#$6'; //TODO: move to .env
 
 @controller("/api/user")
 export class UserController {
@@ -21,7 +24,7 @@ export class UserController {
     }
 
     @httpPost("/")
-    public async post(
+    public async register(
         @response() res: express.Response,
         @requestBody() newUser: RegisterUserDTO
     ) {
@@ -32,12 +35,19 @@ export class UserController {
             res.send(e.message);
         }
     }
-    @httpGet("/")
-    public async get(
-        @response() res: express.Response
+    @httpPost("/login")
+    public async login(
+        @response() res: express.Response,
+        @requestBody() newUser: RegisterUserDTO
     ) {
         try {
-            return "TEST!"
+            const safeUser = await this._userService.login(newUser);
+            const accessToken = jwt.sign(safeUser, accessTokenSecret);
+
+            return {
+                user: safeUser,
+                token: accessToken
+            }
         } catch(e) {
             res.status(500);
             res.send(e.message);

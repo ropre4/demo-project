@@ -1,5 +1,6 @@
 import {all, call, put, fork, takeLatest} from 'redux-saga/effects'
 import {
+    LoginAction,
     LoginActionFailure,
     LoginActionSuccess,
     RegisterAction, RegisterActionFailure,
@@ -8,10 +9,11 @@ import {
 } from "./user.actions";
 import {UserService} from "./user.service";
 
-function* login() {
+function* login(action: LoginAction) {
     try {
-        yield call(UserService.login);
+        yield call(UserService.login, action.user);
         yield put(new LoginActionSuccess());
+        action.done();
     } catch (error) {
         yield put(new LoginActionFailure());
     }

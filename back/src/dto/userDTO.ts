@@ -7,3 +7,8 @@ export interface RegisterUserDTO {
     password: string,
     role: UserRole
 }
+
+export interface LoginUserDTO {
+    email: string,
+    password: string
+}

@@ -1,8 +1,9 @@
 import { inject, injectable } from "inversify";
 import { Repository } from "typeorm";
 import { REPOSITORY_TYPE } from "../constants/repository.types";
-import {User} from "../entities/user";
-import {RegisterUserDTO} from "../dto/registerUserDTO";
+import {User, UserSensitiveFields} from "../entities/user";
+import {LoginUserDTO, RegisterUserDTO} from "../dto/userDTO";
+import {omit} from "ramda";
 import * as bcrypt from "bcrypt";
 
 @injectable()
@@ -21,6 +22,16 @@ export class UserService {
         return await this._userRepository.save({
             ...user,
             password: hash});
+    }
+
+    public async login(user: LoginUserDTO): Promise<User> {
+        const fromDB: User = await this._userRepository.findOne({email: user.email});
+        if(!fromDB) throw new Error("No user found");
+
+        const isCorrectPassword: boolean = await bcrypt.compare(user.password, fromDB.password);
+        if(!isCorrectPassword) throw new Error("Wrong Password");
+
+        return omit(UserSensitiveFields, fromDB);
     }
 
 }

@@ -11,7 +11,7 @@ import {Provider} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
 import {LoaderComponent} from "./common/loader/loader.component";
 
-const LoginPage = lazy(()=>import('./pages/login/login.page'));
+const LoginPage = lazy(()=>import('./pages/login/login.container'));
 const RegisterPage = lazy(()=>import('./pages/register/register.container'));
 
 

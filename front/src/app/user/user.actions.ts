@@ -1,4 +1,5 @@
 import {IRegisterUser} from "./registerUser";
+import {ILoginUser} from "./loginUser";
 
 export interface IAction<T = any> {
     type: T,
@@ -23,6 +24,7 @@ export enum UserActionTypes {
 
 export class LoginAction implements IAction {
     public readonly type = UserActionTypes.LOGIN;
+    constructor(public user: ILoginUser, public done: Function) {}
 }
 export class LoginActionSuccess implements IAction {
     public readonly type = UserActionTypes.LOGIN_SUCCESS;
@@ -33,8 +35,7 @@ export class LoginActionFailure implements IAction {
 
 export class RegisterAction implements IAction {
     public readonly type = UserActionTypes.REGISTER;
-    constructor(public user: IRegisterUser, public done: Function) {
-    }
+    constructor(public user: IRegisterUser, public done: Function) {}
 }
 export class RegisterActionSuccess implements IAction {
     public readonly type = UserActionTypes.REGISTER_SUCCESS;
