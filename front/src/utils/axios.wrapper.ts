@@ -14,7 +14,11 @@ export function getBackendAppLink(): string {
     }
 }
 
-const AxiosDefaultRequestConfig = {Pragma: 'no-cache'};
+const AxiosDefaultRequestConfig = (withToken: boolean) =>(
+    {
+        Pragma: 'no-cache',
+        Authorization: withToken ? `Bearer ${localStorage.getItem('token')}` : null
+    });
 
 function onSuccess() {
     return (response: any) => {
@@ -30,11 +34,11 @@ function onRejected() {
 }
 
 export class AxiosWrapper {
-    static async get<T = any>(path: string, options: AxiosRequestConfig = {}): Promise<T> {
+    static async get<T = any>(path: string, options: AxiosRequestConfig = {}, withToken = true): Promise<T> {
         const config = {
             ...options,
             paramsSerializer: params => stringify(params),
-            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig)
+            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig(withToken))
         };
         const url = getBackendAppLink() + path;
         return axios.get(url, config)
@@ -42,20 +46,20 @@ export class AxiosWrapper {
             .catch(onRejected());
     }
 
-    static async post<T, V = any>(path: string, body?: T, options: AxiosRequestConfig = {}): Promise<V> {
+    static async post<T, V = any>(path: string, body?: T, options: AxiosRequestConfig = {}, withToken = true): Promise<V> {
         const config = {
             ...options,
-            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig)
+            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig(withToken))
         };
         return axios.post(getBackendAppLink() + path, body, config)
             .then(onSuccess())
             .catch(onRejected());
     }
 
-    static async put<T, V = any>(path: string, body?: T, options: AxiosRequestConfig = {}): Promise<V> {
+    static async put<T, V = any>(path: string, body?: T, options: AxiosRequestConfig = {}, withToken = true): Promise<V> {
         const config = {
             ...options,
-            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig)
+            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig(withToken))
         };
         return axios.put(getBackendAppLink() + path, body, config)
             .then(onSuccess())

@@ -4,10 +4,14 @@ import {ILoginUser} from "./loginUser";
 
 export class UserService {
 
-    static async login(user: ILoginUser): Promise<any> {
+    static async login(loginUser: ILoginUser): Promise<any> {
         const path = "/api/user/login";
-        const response = await AxiosWrapper.post(path, user);
-        return response.data;
+        const response = await AxiosWrapper.post(path, loginUser, {}, false);
+
+        const {user, token} = response.data;
+        localStorage.setItem('token', token);
+
+        return user;
     }
 
     static async register(user: IRegisterUser): Promise<any> {
