@@ -15,7 +15,7 @@ function* login(action: LoginAction) {
         yield put(new LoginActionSuccess());
         action.done();
     } catch (error) {
-        yield put(new LoginActionFailure());
+        yield put(new LoginActionFailure(error));
     }
 }
 function* register(action: RegisterAction) {

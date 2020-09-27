@@ -2,13 +2,14 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {RootStateStore} from "../../reducers";
 import {Dispatch} from "redux";
-import {IAction, LoginAction, LogoutAction} from "../../user/user.actions";
+import {IAction, LogoutAction} from "../../user/user.actions";
 import {connect} from "react-redux";
 import './header.css'
 import {useHistory} from "react-router";
 import {ILoggedUser} from "../../user/loginUser";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import {UserRole} from "../../user/registerUser";
 
 function mapStateToProps(state: RootStateStore): HeaderStateProps {
     return {
@@ -76,7 +77,8 @@ function HeaderComponent(props: Props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={logout}>Logout</MenuItem>
+                {props.user?.role === UserRole.RESTAURANT_OWNER && <MenuItem onClick={()=>history.push("/dashboard")}>{t('common:dashboard')}</MenuItem>}
+                <MenuItem onClick={logout}>{t('common:logout')}</MenuItem>
             </Menu>
         </div>
 

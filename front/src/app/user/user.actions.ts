@@ -31,8 +31,11 @@ export class LoginAction implements IAction {
 export class LoginActionSuccess implements IAction {
     public readonly type = UserActionTypes.LOGIN_SUCCESS;
 }
-export class LoginActionFailure implements IAction {
+export class LoginActionFailure extends FailureAction implements IAction {
     public readonly type = UserActionTypes.LOGIN_FAILURE;
+    constructor(public error: any) {
+        super(error);
+    }
 }
 
 export class LogoutAction implements IAction {

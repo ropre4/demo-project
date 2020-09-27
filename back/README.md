@@ -5,8 +5,8 @@ Postgres
 
 To create a migration after modifying an entity: 
 
-`typeorm migration:generate -n [name]`
+`npm run typeorm migration:generate -- -n [name]`
 
 To run missing migrations: 
 
-`typeorm migration:run`
+`npm run typeorm migration:run`

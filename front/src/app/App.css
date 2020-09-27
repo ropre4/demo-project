@@ -33,3 +33,8 @@
 .form-label {
     padding-top: 10px;
 }
+
+.drawer-container {
+    min-width: 600px;
+    padding: 80px 40px;
+}

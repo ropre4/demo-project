@@ -1,7 +1,12 @@
 {
   "common": {
     "motto": "Best Food, Best Delivery",
-    "login": "Login"
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "My Dashboard",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "header": {
     "greeting": "Hello"
@@ -27,5 +32,26 @@
     "customer": "I WANT TO BE A CUSTOMER",
     "owner": "I OWN A RESTAURANT",
     "error_repeat_password": "password does not match"
+  },
+  "dashboard": {
+    "new_restaurant": "Create a Restaurant"
+  },
+  "restaurant_form": {
+    "create_title": "Create a new Restaurant",
+    "edit_title": "Edit a Restaurant",
+    "name": "Name",
+    "description": "Description",
+    "cuisineType": "Cuisine"
+  },
+  "cuisine_type": {
+    "0": "American",
+    "1": "Chinese",
+    "2": "Japanese",
+    "3": "Korean",
+    "4": "Spanish",
+    "5": "Italian",
+    "6": "French",
+    "7": "Indian",
+    "8": "Other"
   }
 }

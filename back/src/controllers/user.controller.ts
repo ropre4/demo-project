@@ -10,9 +10,7 @@ import {
 import {UserService} from "../services/user.service";
 import {SERVICE_TYPE} from "../constants/service.types";
 import {RegisterUserDTO} from "../dto/userDTO";
-
-import * as jwt from "jsonwebtoken";
-const accessTokenSecret = 'O1#QygYh4Ml2u#AGn#$6'; //TODO: move to .env
+import {generateToken} from "./jwt.middleware";
 
 @controller("/api/user")
 export class UserController {
@@ -42,7 +40,7 @@ export class UserController {
     ) {
         try {
             const safeUser = await this._userService.login(newUser);
-            const accessToken = jwt.sign(safeUser, accessTokenSecret);
+            const accessToken = generateToken(safeUser);
 
             return {
                 user: safeUser,
