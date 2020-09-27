@@ -14,4 +14,9 @@ export class RestaurantService {
         const response = await AxiosWrapper.put(path, restaurant);
         return response.data;
     }
+    static async fetchByOwnerId(userId: number): Promise<any> {
+        const path = `/api/restaurant/owner/${userId}`;
+        const response = await AxiosWrapper.get(path);
+        return response.data;
+    }
 }

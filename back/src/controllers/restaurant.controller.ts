@@ -3,7 +3,9 @@ import { inject } from "inversify";
 import {
     controller,
     httpPost,
+    httpGet,
     response,
+    requestParam,
     requestBody,
     request
 } from "inversify-express-utils";
@@ -33,5 +35,18 @@ export class RestaurantController {
             res.status(500);
             res.send(e.message);
         }
+    }
+    @httpGet("/owner/:ownerId")
+    public async getByYear(
+        @response() res: express.Response,
+        @request() req: any,
+        @requestParam("ownerId") ownerId: string
+    ) {
+        if (ownerId.toString() !== req.user.id.toString()) {
+            res.status(403);
+            res.send(`Cannot access to this information`);
+        }
+        return await this._restaurantService.findByOwnerId(parseInt(ownerId));
+
     }
 }

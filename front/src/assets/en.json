@@ -6,7 +6,9 @@
     "dashboard": "My Dashboard",
     "save": "Save",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "actions": "Actions",
+    "view_menu": "View Menu"
   },
   "header": {
     "greeting": "Hello"

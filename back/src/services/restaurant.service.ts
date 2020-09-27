@@ -5,6 +5,14 @@ import {Restaurant} from "../entities/restaurant";
 import {omit} from "ramda";
 import {RestaurantDTO} from "../dto/restaurantDTO";
 
+export interface PaginatedResponse<T> {
+    data: Array<T>,
+    count: number
+}
+export const toPaginatedResponse = <T>(response: [Array<T>, number]):PaginatedResponse<T> => {
+    return {data: response[0], count: response[1]};
+};
+
 @injectable()
 export class RestaurantService {
     private readonly _restaurantRepository: Repository<Restaurant>;
@@ -22,4 +30,10 @@ export class RestaurantService {
         });
     }
 
+    public async findByOwnerId(ownerId: number): Promise<PaginatedResponse<Restaurant>> {
+        const response =  await this._restaurantRepository.findAndCount({
+            ownerId: ownerId
+        });
+        return toPaginatedResponse(response);
+    }
 }

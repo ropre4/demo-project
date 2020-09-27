@@ -38,3 +38,7 @@
     min-width: 600px;
     padding: 80px 40px;
 }
+.table-container {
+    border-radius: 4px;
+    border: 1px solid #b2cddb;
+}

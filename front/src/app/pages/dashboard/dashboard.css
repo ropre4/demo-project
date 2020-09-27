@@ -1,8 +1,12 @@
 
 .dashboard-container {
-    margin-top: 50px;
+    flex-direction: column;
     display: flex;
     justify-content: center;
-    width: 70%;
-
+    margin: 50px 15% 0;
+    padding: 50px;
 }
+.dashboard-actions {
+    padding-bottom: 50px;
+}
+
