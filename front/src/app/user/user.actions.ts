@@ -17,6 +17,8 @@ export enum UserActionTypes {
     LOGIN_SUCCESS = "LOGIN_SUCCESS",
     LOGIN_FAILURE = "LOGIN_FAILURE",
 
+    LOGOUT = "LOGOUT",
+
     REGISTER = "REGISTER",
     REGISTER_SUCCESS = "REGISTER_SUCCESS",
     REGISTER_FAILURE = "REGISTER_FAILURE",
@@ -31,6 +33,10 @@ export class LoginActionSuccess implements IAction {
 }
 export class LoginActionFailure implements IAction {
     public readonly type = UserActionTypes.LOGIN_FAILURE;
+}
+
+export class LogoutAction implements IAction {
+    public readonly type = UserActionTypes.LOGOUT;
 }
 
 export class RegisterAction implements IAction {

@@ -3,6 +3,9 @@
     "motto": "Best Food, Best Delivery",
     "login": "Login"
   },
+  "header": {
+    "greeting": "Hello"
+  },
   "login_form": {
     "welcome": "Welcome back to",
     "new_user1": "New to FoodDelivery?",
