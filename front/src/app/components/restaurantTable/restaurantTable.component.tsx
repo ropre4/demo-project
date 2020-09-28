@@ -7,7 +7,13 @@ import {TableRow, TableCell, TableBody} from "@material-ui/core";
 import {IRestaurant} from "../../restaurant/restaurant";
 import Button from "@material-ui/core/Button/Button";
 
-export function RestaurantTableComponent(props: { list: IRestaurant[], onViewMenu: Function, isOwner: boolean, onEdit: Function, onDelete: Function}) {
+export function RestaurantTableComponent(props: {
+    list: IRestaurant[],
+    onViewMenu: (id: number)=>void,
+    isOwner: boolean,
+    onEdit: (res: IRestaurant)=>void,
+    onDelete: (id: number)=>void,
+}) {
     const {t} = useTranslation();
 
     return <div className="table-container">
@@ -21,8 +27,8 @@ export function RestaurantTableComponent(props: { list: IRestaurant[], onViewMen
                 </TableRow>
             </TableHead>
             <TableBody>
-                {props.list.map((res: IRestaurant)=> {
-                    return <TableRow>
+                {props.list.map((res: IRestaurant, i: number)=> {
+                    return <TableRow key={i}>
                         <TableCell align="center">{res.name}</TableCell>
                         <TableCell align="center">{res.description}</TableCell>
                         <TableCell align="center"><Chip color="secondary" label={t(`cuisine_type:${res.cuisineType}`)}/></TableCell>
@@ -30,7 +36,7 @@ export function RestaurantTableComponent(props: { list: IRestaurant[], onViewMen
                             <div>
                                 <Button style={{margin: '0 10px'}} variant="contained" color="primary" onClick={()=>props.onViewMenu(res.id)}>{t('common:view_menu')}</Button>
                                 {props.isOwner && <>
-                                  <Button style={{margin: '0 10px'}} variant="contained" color="primary" onClick={()=>props.onEdit(res.id)}>{t('common:edit')}</Button>
+                                  <Button style={{margin: '0 10px'}} variant="contained" color="primary" onClick={()=>props.onEdit(res)}>{t('common:edit')}</Button>
                                   <Button style={{margin: '0 10px'}} variant="outlined" color="primary" onClick={()=>props.onDelete(res.id)}>{t('common:delete')}</Button>
                                 </>}
                             </div>

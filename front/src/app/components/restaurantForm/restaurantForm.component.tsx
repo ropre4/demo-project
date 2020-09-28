@@ -39,18 +39,20 @@ export function RestaurantFormComponent(props: {onSubmit: Function, restaurant: 
     }
 
     return <div className="drawer-container">
-        <Grid item className="form-title">{t('restaurant_form:create_title')}</Grid>
+        <Grid item className="form-title">{isEdit ? t('restaurant_form:edit_title') : t('restaurant_form:create_title')}</Grid>
         <Grid container>
             <Grid container className="form-item">
                 <Grid item sm={4} className="form-label">{t('restaurant_form:name')}:</Grid>
                 <Grid item sm={8}>
-                    <InputComponent type="text" error={errors.name} onChange={(value)=>setRestaurant({...restaurant, name: value})}/>
+                    <InputComponent type="text" error={errors.name} initialValue={restaurant.name}
+                                    onChange={(value)=>setRestaurant({...restaurant, name: value})}/>
                 </Grid>
             </Grid>
             <Grid container className="form-item">
                 <Grid item sm={4} className="form-label">{t('restaurant_form:description')}:</Grid>
                 <Grid item sm={8}>
-                    <InputComponent type="text" error={errors.description} onChange={(value)=>setRestaurant({...restaurant, description: value})}/>
+                    <InputComponent type="text" error={errors.description} initialValue={restaurant.description}
+                                    onChange={(value)=>setRestaurant({...restaurant, description: value})}/>
                 </Grid>
             </Grid>
             <Grid container className="form-item">
@@ -58,12 +60,12 @@ export function RestaurantFormComponent(props: {onSubmit: Function, restaurant: 
                 <Grid item sm={8}>
                     <Select value={restaurant.cuisineType} error={errors.cuisineType} style={{width: '100%'}}
                             onChange={(event)=>setRestaurant({...restaurant, cuisineType: parseInt(event.target.value as string)})}>
-                        {values(CuisineType).filter(el=>typeof el === 'number').map(el=><MenuItem value={el}>{t('cuisine_type:' + el)}</MenuItem>)}
+                        {values(CuisineType).filter(el=>typeof el === 'number').map((el,i)=><MenuItem key={i} value={el}>{t('cuisine_type:' + el)}</MenuItem>)}
                     </Select>
                 </Grid>
             </Grid>
             <Button  style={{width: '100%', marginTop: 50}} variant="contained" color="primary" onClick={()=>handleSubmit(restaurant)}>
-                {t('common:save')}
+                {isEdit ? t('common:edit') : t('common:save')}
             </Button>
         </Grid>
     </div>

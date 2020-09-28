@@ -3,6 +3,9 @@ import {
     CreateRestarantAction,
     CreateRestarantActionFailure,
     CreateRestarantActionSuccess,
+    DeleteRestaurantAction,
+    DeleteRestaurantActionFailure,
+    DeleteRestaurantActionSuccess,
     EditRestaurantAction,
     EditRestaurantActionFailure,
     EditRestaurantActionSuccess,
@@ -10,7 +13,7 @@ import {
 } from "./restaurant.actions";
 import {RestaurantService} from "./restaurant.service";
 
-function* create(action: CreateRestarantAction) {
+function* createRestaurant(action: CreateRestarantAction) {
     try {
         yield call(RestaurantService.create, action.restaurant);
         yield put(new CreateRestarantActionSuccess());
@@ -18,7 +21,7 @@ function* create(action: CreateRestarantAction) {
         yield put(new CreateRestarantActionFailure(error));
     }
 }
-function* edit(action: EditRestaurantAction) {
+function* editRestaurant(action: EditRestaurantAction) {
     try {
         yield call(RestaurantService.edit, action.restaurant);
         yield put(new EditRestaurantActionSuccess());
@@ -26,17 +29,30 @@ function* edit(action: EditRestaurantAction) {
         yield put(new EditRestaurantActionFailure(error));
     }
 }
+function* deleteRestaurant(action: DeleteRestaurantAction) {
+    try {
+        yield call(RestaurantService.delete, action.restaurantId);
+        yield put(new DeleteRestaurantActionSuccess());
+        action.done();
+    } catch (error) {
+        yield put(new DeleteRestaurantActionFailure(error));
+    }
+}
 
 function* watchCreate() {
-    yield takeLatest(RestaurantActionTypes.CREATE_RESTAURANT, create);
+    yield takeLatest(RestaurantActionTypes.CREATE_RESTAURANT, createRestaurant);
 }
 function* watchEdit() {
-    yield takeLatest(RestaurantActionTypes.EDIT_RESTAURANT, edit);
+    yield takeLatest(RestaurantActionTypes.EDIT_RESTAURANT, editRestaurant);
+}
+function* watchDelete() {
+    yield takeLatest(RestaurantActionTypes.DELETE_RESTAURANT, deleteRestaurant);
 }
 
 export default function* userSaga() {
     yield all([
         fork(watchCreate),
-        fork(watchEdit)
+        fork(watchEdit),
+        fork(watchDelete)
     ])
 };

@@ -30,10 +30,30 @@ export class RestaurantService {
         });
     }
 
+    public async edit(restaurant: RestaurantDTO, userId: number, restaurantId: number): Promise<Restaurant> {
+
+        await this.validateIsOwner(userId, restaurantId);
+
+        return await this._restaurantRepository.save({...restaurant, id: restaurantId});
+    }
+
+    public async delete(userId: number, restaurantId: number): Promise<Restaurant> {
+
+        const fromDB = await this.validateIsOwner(userId, restaurantId);
+
+        return await this._restaurantRepository.remove(fromDB);
+    }
+
     public async findByOwnerId(ownerId: number): Promise<PaginatedResponse<Restaurant>> {
         const response =  await this._restaurantRepository.findAndCount({
             ownerId: ownerId
         });
         return toPaginatedResponse(response);
+    }
+
+    private async validateIsOwner(userId: number, restaurantId: number): Promise<Restaurant> {
+        const fromDB: Restaurant = await this._restaurantRepository.findOneOrFail({id: restaurantId});
+        if(fromDB.ownerId !== userId) throw new Error("Given user cannot edit the restaurant " + fromDB.id);
+        return fromDB;
     }
 }

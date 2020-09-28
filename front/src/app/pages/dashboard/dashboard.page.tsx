@@ -12,6 +12,7 @@ import {RestaurantService} from "../../restaurant/restaurant.service";
 import {Paper} from "@material-ui/core";
 import {RestaurantTableComponent} from "../../components/restaurantTable/restaurantTable.component";
 import {IRestaurant} from "../../restaurant/restaurant";
+import {useEffect} from "react";
 
 
 export interface IDashboardPageProps {
@@ -19,6 +20,7 @@ export interface IDashboardPageProps {
 }
 
 export interface IDashboardPageDispatcher {
+    deleteRestaurant: (id: number, done: Function)=>void
 }
 
 interface Props extends IDashboardPageProps, IDashboardPageDispatcher {}
@@ -26,30 +28,47 @@ interface Props extends IDashboardPageProps, IDashboardPageDispatcher {}
 export default function DashboardPage(props: Props) {
 
     const {t} = useTranslation();
-    const [restaurantForm, setRestaurantForm] = React.useState<boolean>(false);
+    const [restaurantForm, setRestaurantForm] = React.useState<[boolean, IRestaurant]>([false, null]);
 
-    const restaurantList = useQuery('fetchOwnRestaurants',
-        () => RestaurantService.fetchByOwnerId(props.user.id), {retry: false});
+    const restaurantList = useQuery('fetchOwnRestaurants', () => RestaurantService.fetchByOwnerId(props.user.id),
+        {retry: false, enabled: false });
 
+    useEffect(() => {
+        restaurantList.refetch();
+    }, []);
+
+    const onEdit = (restaurant: IRestaurant) => {
+        setRestaurantForm([true, restaurant]);
+    }
+    const onDelete = (restaurantId: number) => {
+        if (window.confirm("Do you really want to delete this restaurant?")) {
+            props.deleteRestaurant(restaurantId, restaurantList.refetch);
+        }
+    }
     const loading = false; //TODO: use
 
     return <div>
         {loading ? <LoaderComponent /> :
             <Paper elevation={0} className="dashboard-container">
                 <div className="dashboard-actions">
-                    <Button  variant="contained" color="secondary" onClick={()=>setRestaurantForm(true)}>
+                    <Button  variant="contained" color="secondary" onClick={()=>setRestaurantForm([true, null])}>
                         {t('dashboard:new_restaurant')}
                     </Button>
                 </div>
-                {!restaurantList.isLoading && <RestaurantTableComponent
+                {!restaurantList.isLoading && restaurantList.data && <RestaurantTableComponent
                     list={restaurantList.data.data}
                     onViewMenu={()=>{}}
                     isOwner={true}
-                    onEdit={()=>{}}
-                    onDelete={()=>{}}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
                 />}
-                <Drawer anchor="right" open={restaurantForm} onClose={()=>setRestaurantForm(false)}>
-                    <RestaurantFormComponent onSubmit={()=>setRestaurantForm(false)} restaurant={null}/>
+                <Drawer anchor="right" open={restaurantForm[0]} onClose={()=>setRestaurantForm([false, null])}>
+                    <RestaurantFormComponent
+                        onSubmit={()=>{
+                            setRestaurantForm([false, null]);
+                            restaurantList.refetch();
+                        }}
+                        restaurant={restaurantForm[1]}/>
                 </Drawer>
             </Paper>
         }

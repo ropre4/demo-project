@@ -65,4 +65,14 @@ export class AxiosWrapper {
             .then(onSuccess())
             .catch(onRejected());
     }
+
+    static async delete<T, V = any>(path: string, options: AxiosRequestConfig = {}, withToken = true): Promise<V> {
+        const config = {
+            ...options,
+            headers: R.mergeDeepRight(options.headers, AxiosDefaultRequestConfig(withToken))
+        };
+        return axios.delete(getBackendAppLink() + path, config)
+            .then(onSuccess())
+            .catch(onRejected());
+    }
 }

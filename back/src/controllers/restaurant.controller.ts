@@ -7,7 +7,9 @@ import {
     response,
     requestParam,
     requestBody,
-    request
+    request,
+    httpPut,
+    httpDelete
 } from "inversify-express-utils";
 import {SERVICE_TYPE} from "../constants/service.types";
 import {RestaurantService} from "../services/restaurant.service";
@@ -24,13 +26,41 @@ export class RestaurantController {
     }
 
     @httpPost("/")
-    public async post(
+    public async createRestaurant(
         @response() res: express.Response,
         @request() req: any,
         @requestBody() newRestaurant: RestaurantDTO
     ) {
         try {
             return await this._restaurantService.create(newRestaurant, req.user.id);
+        } catch(e) {
+            res.status(500);
+            res.send(e.message);
+        }
+    }
+    @httpPut("/:id")
+    public async editRestaurant(
+        @response() res: express.Response,
+        @request() req: any,
+        @requestParam("id") id: string,
+        @requestBody() newRestaurant: RestaurantDTO
+    ) {
+        try {
+            return await this._restaurantService.edit(newRestaurant, req.user.id, parseInt(id));
+        } catch(e) {
+            res.status(500);
+            res.send(e.message);
+        }
+    }
+    @httpDelete("/:id")
+    public async deleteRestaurant(
+        @response() res: express.Response,
+        @request() req: any,
+        @requestParam("id") id: string,
+        @requestBody() newRestaurant: RestaurantDTO
+    ) {
+        try {
+            return await this._restaurantService.delete(req.user.id, parseInt(id));
         } catch(e) {
             res.status(500);
             res.send(e.message);

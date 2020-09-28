@@ -45,7 +45,7 @@ export class EditRestaurantActionFailure extends FailureAction implements IActio
 
 export class DeleteRestaurantAction implements IAction {
     public readonly type = RestaurantActionTypes.DELETE_RESTAURANT;
-    constructor() {}
+    constructor(public restaurantId: number, public done: Function) {}
 }
 export class DeleteRestaurantActionSuccess implements IAction {
     public readonly type = RestaurantActionTypes.DELETE_RESTAURANT_SUCCESS;
