@@ -1,5 +1,5 @@
 import {IRegisterUser} from "./registerUser";
-import {ILoginUser} from "./loginUser";
+import {ILoggedUser, ILoginUser} from "./loginUser";
 
 export interface IAction<T = any> {
     type: T,
@@ -30,6 +30,7 @@ export class LoginAction implements IAction {
 }
 export class LoginActionSuccess implements IAction {
     public readonly type = UserActionTypes.LOGIN_SUCCESS;
+    constructor(public user: ILoggedUser) {}
 }
 export class LoginActionFailure extends FailureAction implements IAction {
     public readonly type = UserActionTypes.LOGIN_FAILURE;

@@ -23,6 +23,11 @@ export class RestaurantService {
         this._restaurantRepository = restaurantRepository;
     }
 
+    public async fetch(): Promise<PaginatedResponse<Restaurant>> {
+        const response =  await this._restaurantRepository.findAndCount();
+        return toPaginatedResponse(response);
+    }
+
     public async create(restaurant: RestaurantDTO, ownerId: number): Promise<Restaurant> {
         return await this._restaurantRepository.save({
             ...restaurant,

@@ -25,6 +25,13 @@ export class RestaurantController {
         this._restaurantService = restaurantService;
     }
 
+    @httpGet("/")
+    public async fetchRestaurants(
+        @response() res: express.Response,
+        @request() req: any
+    ) {
+        return await this._restaurantService.fetch();
+    }
     @httpPost("/")
     public async createRestaurant(
         @response() res: express.Response,
@@ -67,7 +74,7 @@ export class RestaurantController {
         }
     }
     @httpGet("/owner/:ownerId")
-    public async getByYear(
+    public async getByOwnerId(
         @response() res: express.Response,
         @request() req: any,
         @requestParam("ownerId") ownerId: string

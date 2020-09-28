@@ -10,7 +10,6 @@ import {InputComponent} from "../../common/input/input.component";
 import Button from "@material-ui/core/Button/Button";
 import Paper from "@material-ui/core/Paper/Paper";
 import {ILoginUser, ILoginUserErrors, LoginUser} from "../../user/loginUser";
-import {IRegisterUser} from "../../user/registerUser";
 
 export interface ILoginPageProps {
     loading: boolean

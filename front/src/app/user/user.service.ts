@@ -1,10 +1,10 @@
 import {AxiosWrapper} from "../../utils/axios.wrapper";
 import {IRegisterUser} from "./registerUser";
-import {ILoginUser} from "./loginUser";
+import {ILoggedUser, ILoginUser} from "./loginUser";
 
 export class UserService {
 
-    static async login(loginUser: ILoginUser): Promise<any> {
+    static async login(loginUser: ILoginUser): Promise<ILoggedUser> {
         const path = "/api/user/login";
         const response = await AxiosWrapper.post(path, loginUser, {}, false);
 

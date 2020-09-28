@@ -53,6 +53,10 @@ function HeaderComponent(props: Props) {
         props.logout();
         handleClose();
     }
+    const pushTo = (where: string) => {
+        setAnchorEl(null);
+        history.push(where);
+    }
 
     return <div className={"fd-header"}>
         <div className={"fd-header-logo"}>
@@ -77,7 +81,8 @@ function HeaderComponent(props: Props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                {props.user?.role === UserRole.RESTAURANT_OWNER && <MenuItem onClick={()=>history.push("/dashboard")}>{t('common:dashboard')}</MenuItem>}
+                {props.user?.role === UserRole.RESTAURANT_OWNER && <MenuItem onClick={()=>pushTo("/dashboard")}>{t('common:dashboard')}</MenuItem>}
+                {props.user?.role === UserRole.CUSTOMER && <MenuItem onClick={()=>pushTo("/feed")}>{t('common:feed')}</MenuItem>}
                 <MenuItem onClick={logout}>{t('common:logout')}</MenuItem>
             </Menu>
         </div>

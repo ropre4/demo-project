@@ -24,7 +24,7 @@ describe("given UserReducer", () => {
     });
     describe("when Login is a success", () => {
         it("should set logged flag", () => {
-            const action = new LoginActionSuccess();
+            const action = new LoginActionSuccess(null);
             const state = UserReducer(initialState, action);
             expect(state).toEqual({
                 ...initialState,
@@ -35,7 +35,7 @@ describe("given UserReducer", () => {
     });
     describe("when Login is a failure", () => {
         it("should set logged flag", () => {
-            const action = new LoginActionFailure();
+            const action = new LoginActionFailure(null);
             const state = UserReducer(initialState, action);
             expect(state).toEqual({
                 ...initialState,

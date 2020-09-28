@@ -24,4 +24,9 @@ export class RestaurantService {
         const response = await AxiosWrapper.get(path);
         return response.data;
     }
+    static async fetch(): Promise<any> {
+        const path = `/api/restaurant/`;
+        const response = await AxiosWrapper.get(path);
+        return response.data;
+    }
 }

@@ -29,7 +29,7 @@ export function UserReducer(state: UserState = initialUserState(true), action: I
         case UserActionTypes.REGISTER:
             return {...state, loading: true};
         case UserActionTypes.LOGIN_SUCCESS:
-            return {...state, loading: false, isLogged: true};
+            return {...state, loading: false, isLogged: true, user: action.user};
         case UserActionTypes.LOGIN_FAILURE:
             return {...state, loading: false, isLogged: false};
         case UserActionTypes.REGISTER_SUCCESS:

@@ -11,8 +11,8 @@ import {UserService} from "./user.service";
 
 function* login(action: LoginAction) {
     try {
-        yield call(UserService.login, action.user);
-        yield put(new LoginActionSuccess());
+        const user = yield call(UserService.login, action.user);
+        yield put(new LoginActionSuccess(user));
         action.done();
     } catch (error) {
         yield put(new LoginActionFailure(error));
