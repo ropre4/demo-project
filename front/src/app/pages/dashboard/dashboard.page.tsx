@@ -13,7 +13,7 @@ import {Paper} from "@material-ui/core";
 import {RestaurantTableComponent} from "../../components/restaurantTable/restaurantTable.component";
 import {IRestaurant} from "../../restaurant/restaurant";
 import {useEffect, useState} from "react";
-import {MenuContainer} from "../../components/menuContainer/menu.container";
+import {MenuCreator} from "../../components/menuCreator/menu.creator";
 
 
 export interface IDashboardPageProps {
@@ -75,7 +75,7 @@ export default function DashboardPage(props: Props) {
                         restaurant={restaurantForm[1]}/>
                 </Drawer>
                 <Drawer anchor="right" open={mealForm[0]} onClose={()=>setMealForm([false, null])}>
-                    <MenuContainer restaurantId={mealForm[1]}/>
+                    <MenuCreator restaurantId={mealForm[1]}/>
                 </Drawer>
             </Paper>
         }

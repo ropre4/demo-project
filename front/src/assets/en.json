@@ -10,7 +10,8 @@
     "delete": "Delete",
     "actions": "Actions",
     "view_menu": "View Menu",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "add": "Add"
   },
   "header": {
     "greeting": "Hello"

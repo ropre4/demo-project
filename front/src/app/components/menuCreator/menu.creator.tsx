@@ -10,7 +10,7 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {DeleteMealAction} from "../../meal/meal.actions";
 
-export function MenuContainer(props: {restaurantId: number}) {
+export function MenuCreator(props: {restaurantId: number}) {
 
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -42,7 +42,9 @@ export function MenuContainer(props: {restaurantId: number}) {
             isOwner={true}
             onCreate={()=>openMealForm(null)}
             onEdit={(meal: IMeal)=>openMealForm(meal)}
-            onDelete={onDelete}/>}
+            onDelete={onDelete}
+            onAddToOrder={null}/>
+            }
 
         {mealForm[0] && <MealFormComponent onSubmit={onSubmit} onCancel={()=>setMealForm([false, null])} meal={mealForm[1]} restaurantId={props.restaurantId}/>}
     </div>

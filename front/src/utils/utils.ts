@@ -1,6 +1,6 @@
 
-export const displayPrice = (price: number): number => {
-    return price / 100;
+export const displayPrice = (price: number): string => {
+    return `$ ${(price / 100)}`;
 }
 
 export const setPrice = (price: string): number => {
