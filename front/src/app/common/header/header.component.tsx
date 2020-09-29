@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {RootStateStore} from "../../reducers";
 import {Dispatch} from "redux";
@@ -38,7 +39,7 @@ function HeaderComponent(props: Props) {
     const {t} = useTranslation();
     const history = useHistory();
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);

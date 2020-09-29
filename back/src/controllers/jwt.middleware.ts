@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken";
+import {UserRole} from "../entities/user";
 
 const accessTokenSecret = 'O1#QygYh4Ml2u#AGn#$6'; //TODO: move to .env
 
@@ -22,3 +23,15 @@ export const authenticateJWT = (req, res, next) => {
         res.sendStatus(401);
     }
 };
+export function validateRoleIsOwner(user, res) {
+    if (user.role !== UserRole.RESTAURANT_OWNER) {
+        res.status(403);
+        res.send(`User must be a Restaurant owner`);
+    }
+}
+export function validateRoleIsCustomer(user, res) {
+    if (user.role !== UserRole.CUSTOMER) {
+        res.status(403);
+        res.send(`User must be a Customer`);
+    }
+}

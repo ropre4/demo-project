@@ -17,7 +17,7 @@ export enum RestaurantActionTypes {
 
 export class CreateRestarantAction implements IAction {
     public readonly type = RestaurantActionTypes.CREATE_RESTAURANT;
-    constructor(public restaurant: IRestaurantForm) {}
+    constructor(public restaurant: IRestaurantForm, public done: Function) {}
 }
 export class CreateRestarantActionSuccess implements IAction {
     public readonly type = RestaurantActionTypes.CREATE_RESTAURANT_SUCCESS;
@@ -31,7 +31,7 @@ export class CreateRestarantActionFailure extends FailureAction implements IActi
 
 export class EditRestaurantAction implements IAction {
     public readonly type = RestaurantActionTypes.EDIT_RESTAURANT;
-    constructor(public restaurant: IRestaurantForm) {}
+    constructor(public restaurant: IRestaurantForm, public done: Function) {}
 }
 export class EditRestaurantActionSuccess implements IAction {
     public readonly type = RestaurantActionTypes.EDIT_RESTAURANT_SUCCESS;

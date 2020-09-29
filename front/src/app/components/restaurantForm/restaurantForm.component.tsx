@@ -32,9 +32,8 @@ export function RestaurantFormComponent(props: {onSubmit: Function, restaurant: 
         const err = RestaurantForm.ValidateRestaurantForm(restaurant);
         setErrors(err);
         if(findIndex(el=>el===true)(values(err))===-1) {
-            if(isEdit) dispatch(new EditRestaurantAction(restaurant));
-            else dispatch(new CreateRestarantAction(restaurant));
-            props.onSubmit();
+            if(isEdit) dispatch(new EditRestaurantAction(restaurant, props.onSubmit));
+            else dispatch(new CreateRestarantAction(restaurant, props.onSubmit));
         }
     }
 

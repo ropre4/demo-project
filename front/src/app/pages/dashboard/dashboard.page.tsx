@@ -12,7 +12,8 @@ import {RestaurantService} from "../../restaurant/restaurant.service";
 import {Paper} from "@material-ui/core";
 import {RestaurantTableComponent} from "../../components/restaurantTable/restaurantTable.component";
 import {IRestaurant} from "../../restaurant/restaurant";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {MenuContainer} from "../../components/menuContainer/menu.container";
 
 
 export interface IDashboardPageProps {
@@ -28,7 +29,8 @@ interface Props extends IDashboardPageProps, IDashboardPageDispatcher {}
 export default function DashboardPage(props: Props) {
 
     const {t} = useTranslation();
-    const [restaurantForm, setRestaurantForm] = React.useState<[boolean, IRestaurant]>([false, null]);
+    const [restaurantForm, setRestaurantForm] = useState<[boolean, IRestaurant]>([false, null]);
+    const [mealForm, setMealForm] = useState<[boolean, number]>([false, null]);
 
     const restaurantList = useQuery('fetchOwnRestaurants', () => RestaurantService.fetchByOwnerId(props.user.id),
         {retry: false, enabled: false });
@@ -36,7 +38,9 @@ export default function DashboardPage(props: Props) {
     useEffect(() => {
         restaurantList.refetch();
     }, []);
-
+    const onViewMenu = (restaurantId: number) => {
+        setMealForm([true, restaurantId]);
+    }
     const onEdit = (restaurant: IRestaurant) => {
         setRestaurantForm([true, restaurant]);
     }
@@ -57,7 +61,7 @@ export default function DashboardPage(props: Props) {
                 </div>
                 {!restaurantList.isLoading && restaurantList.data && <RestaurantTableComponent
                     list={restaurantList.data.data}
-                    onViewMenu={()=>{}}
+                    onViewMenu={onViewMenu}
                     isOwner={true}
                     onEdit={onEdit}
                     onDelete={onDelete}
@@ -69,6 +73,9 @@ export default function DashboardPage(props: Props) {
                             restaurantList.refetch();
                         }}
                         restaurant={restaurantForm[1]}/>
+                </Drawer>
+                <Drawer anchor="right" open={mealForm[0]} onClose={()=>setMealForm([false, null])}>
+                    <MenuContainer restaurantId={mealForm[1]}/>
                 </Drawer>
             </Paper>
         }

@@ -37,9 +37,9 @@ export class RestaurantService {
 
     public async edit(restaurant: RestaurantDTO, userId: number, restaurantId: number): Promise<Restaurant> {
 
-        await this.validateIsOwner(userId, restaurantId);
+        const fromDB = await this.validateIsOwner(userId, restaurantId);
 
-        return await this._restaurantRepository.save({...restaurant, id: restaurantId});
+        return await this._restaurantRepository.save({...fromDB, ...restaurant});
     }
 
     public async delete(userId: number, restaurantId: number): Promise<Restaurant> {
@@ -58,7 +58,7 @@ export class RestaurantService {
 
     private async validateIsOwner(userId: number, restaurantId: number): Promise<Restaurant> {
         const fromDB: Restaurant = await this._restaurantRepository.findOneOrFail({id: restaurantId});
-        if(fromDB.ownerId !== userId) throw new Error("Given user cannot edit the restaurant " + fromDB.id);
+        if(fromDB.ownerId !== userId) throw new Error("Given user cannot modify the restaurant " + fromDB.id);
         return fromDB;
     }
 }

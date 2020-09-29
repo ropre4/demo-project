@@ -3,7 +3,7 @@ import * as React from "react";
 import './input.css'
 import {useState, useEffect} from "react";
 
-export function InputComponent({initialValue = null, type, onChange=(_)=>null, error = false, errorText = null}) {
+export function InputComponent({initialValue = null, type, onChange=(_)=>null, error = false, errorText = null, label = null}) {
     const [value, setValue] = useState(initialValue);
 
     const handleChange = (e) => {
@@ -24,8 +24,10 @@ export function InputComponent({initialValue = null, type, onChange=(_)=>null, e
     return <TextField className="fd-input"
                       type={type}
                       error={error}
+                      label={label}
                       helperText={error ? errorText : null}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={value}/>
+                      value={value}>
+    </TextField>
 }

@@ -17,6 +17,7 @@ function* createRestaurant(action: CreateRestarantAction) {
     try {
         yield call(RestaurantService.create, action.restaurant);
         yield put(new CreateRestarantActionSuccess());
+        action.done();
     } catch (error) {
         yield put(new CreateRestarantActionFailure(error));
     }
@@ -25,6 +26,7 @@ function* editRestaurant(action: EditRestaurantAction) {
     try {
         yield call(RestaurantService.edit, action.restaurant);
         yield put(new EditRestaurantActionSuccess());
+        action.done();
     } catch (error) {
         yield put(new EditRestaurantActionFailure(error));
     }

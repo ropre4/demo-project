@@ -9,7 +9,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "actions": "Actions",
-    "view_menu": "View Menu"
+    "view_menu": "View Menu",
+    "cancel": "Cancel"
   },
   "header": {
     "greeting": "Hello"
@@ -37,7 +38,8 @@
     "error_repeat_password": "password does not match"
   },
   "dashboard": {
-    "new_restaurant": "Create a Restaurant"
+    "new_restaurant": "Create a Restaurant",
+    "new_meal": "Create a Meal"
   },
   "restaurant_form": {
     "create_title": "Create a new Restaurant",
@@ -45,6 +47,13 @@
     "name": "Name",
     "description": "Description",
     "cuisineType": "Cuisine"
+  },
+  "meal_form": {
+    "create_title": "Create a new Meal",
+    "edit_title": "Edit a Meal",
+    "name": "Name",
+    "description": "Description",
+    "price": "Price"
   },
   "cuisine_type": {
     "0": "American",

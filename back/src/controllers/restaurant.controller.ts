@@ -14,7 +14,7 @@ import {
 import {SERVICE_TYPE} from "../constants/service.types";
 import {RestaurantService} from "../services/restaurant.service";
 import {RestaurantDTO} from "../dto/restaurantDTO";
-import {authenticateJWT} from "./jwt.middleware";
+import {authenticateJWT, validateRoleIsOwner} from "./jwt.middleware";
 
 @controller("/api/restaurant", authenticateJWT)
 export class RestaurantController {
@@ -38,6 +38,7 @@ export class RestaurantController {
         @request() req: any,
         @requestBody() newRestaurant: RestaurantDTO
     ) {
+        validateRoleIsOwner(req.user, res);
         try {
             return await this._restaurantService.create(newRestaurant, req.user.id);
         } catch(e) {
@@ -50,10 +51,11 @@ export class RestaurantController {
         @response() res: express.Response,
         @request() req: any,
         @requestParam("id") id: string,
-        @requestBody() newRestaurant: RestaurantDTO
+        @requestBody() restaurant: RestaurantDTO
     ) {
+        validateRoleIsOwner(req.user, res);
         try {
-            return await this._restaurantService.edit(newRestaurant, req.user.id, parseInt(id));
+            return await this._restaurantService.edit(restaurant, req.user.id, parseInt(id));
         } catch(e) {
             res.status(500);
             res.send(e.message);
@@ -66,6 +68,7 @@ export class RestaurantController {
         @requestParam("id") id: string,
         @requestBody() newRestaurant: RestaurantDTO
     ) {
+        validateRoleIsOwner(req.user, res);
         try {
             return await this._restaurantService.delete(req.user.id, parseInt(id));
         } catch(e) {
@@ -81,8 +84,10 @@ export class RestaurantController {
     ) {
         if (ownerId.toString() !== req.user.id.toString()) {
             res.status(403);
-            res.send(`Cannot access to this information`);
+            res.send(`This user cannot perform this action`);
         }
+        validateRoleIsOwner(req.user, res);
+
         return await this._restaurantService.findByOwnerId(parseInt(ownerId));
 
     }
