@@ -15,7 +15,6 @@ import {SERVICE_TYPE} from "../constants/service.types";
 import {MealService} from "../services/meal.service";
 import {authenticateJWT, validateRoleIsOwner} from "./jwt.middleware";
 import {MealDTO} from "../dto/mealDTO";
-import {RestaurantDTO} from "../dto/restaurantDTO";
 
 @controller("/api/restaurant/:restaurantId/meal", authenticateJWT)
 export class MealController {

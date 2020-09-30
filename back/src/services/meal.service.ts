@@ -49,6 +49,11 @@ export class MealService {
         return toPaginatedResponse(response);
     }
 
+    public async findIdsByRestaurantId(restaurantId: number, ids: number[]): Promise<Meal[]> {
+        const response =  await this._mealRepository.findByIds(ids, {restaurantId: restaurantId});
+        return response;
+    }
+
     private async validateIsOwner(userId: number, mealId: number): Promise<Meal> {
         const fromDB: Meal = await this._mealRepository.findOneOrFail({id: mealId});
         if(fromDB.ownerId !== userId) throw new Error("Given user cannot modify the meal " + fromDB.id);
