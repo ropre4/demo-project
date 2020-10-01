@@ -15,6 +15,6 @@ export class OrderStatusHistory {
     public userId!: number;
     @Column()
     public newStatus!: OrderStatus;
-    @Column()
+    @Column({ type: 'bigint' })
     public created!: number;
 }

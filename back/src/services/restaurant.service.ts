@@ -55,7 +55,12 @@ export class RestaurantService {
         });
         return toPaginatedResponse(response);
     }
-
+    public async findById(restaurantId: number): Promise<Restaurant> {
+        const response =  await this._restaurantRepository.findOneOrFail({
+            id: restaurantId
+        });
+        return response;
+    }
     private async validateIsOwner(userId: number, restaurantId: number): Promise<Restaurant> {
         const fromDB: Restaurant = await this._restaurantRepository.findOneOrFail({id: restaurantId});
         if(fromDB.ownerId !== userId) throw new Error("Given user cannot modify the restaurant " + fromDB.id);

@@ -1,6 +1,6 @@
 import {OrderStatus} from "../entities/order";
 
-export interface OrderWithLinesDTO {
+export interface OrderDTO {
     id?: number,
     created?: number,
     creatorId?: number,
@@ -9,8 +9,15 @@ export interface OrderWithLinesDTO {
     restaurantName?: string,
     lastUpdate?: number,
     status?: OrderStatus,
-    total: number,
-    lines: OrderLineDTO[]
+    total: number
+}
+
+export interface OrderWithLinesDTO extends OrderDTO {
+    lines: OrderLineDTO[];
+}
+
+export interface OrderWithDetailsDTO extends OrderWithLinesDTO {
+    history: OrderStatusHistoryDTO[];
 }
 
 export interface OrderLineDTO {
@@ -20,4 +27,12 @@ export interface OrderLineDTO {
     price: number,
     mealId: number,
     mealName: string
+}
+
+export interface OrderStatusHistoryDTO {
+    id: number,
+    orderId: number,
+    userId: number,
+    newStatus: OrderStatus,
+    created: number
 }

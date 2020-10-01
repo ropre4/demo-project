@@ -2,8 +2,6 @@ import {AxiosWrapper} from "../../utils/axios.wrapper";
 import {omit} from "ramda";
 import {IMealForm} from "./meal";
 
-
-
 export class MealService {
 
     static async create(meal: IMealForm, restaurantId: number): Promise<any> {

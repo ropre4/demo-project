@@ -35,3 +35,9 @@ export function validateRoleIsCustomer(user, res) {
         res.send(`User must be a Customer`);
     }
 }
+export function validateInfoBelongsToUser(tokenUserId: number, restUserId: number, res) {
+    if (tokenUserId !== restUserId) {
+        res.status(403);
+        res.send(`This information belongs to another user`);
+    }
+}

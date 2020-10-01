@@ -82,7 +82,6 @@ export default function RegisterPage(props: Props) {
                             indicatorColor="secondary"
                             textColor="secondary"
                             onChange={(_, value)=>setUser({...user, role: value})}
-                            aria-label="disabled tabs example"
                         >
                             <Tab label={t('register_form:customer')} style={{width: '50%', fontWeight: 'bold'}} value={UserRole.CUSTOMER}/>
                             <Tab label={t('register_form:owner')} style={{width: '50%', fontWeight: 'bold'}} value={UserRole.RESTAURANT_OWNER}/>

@@ -14,57 +14,60 @@ export function MealTableComponent(props: {
     onCreate: ()=>void,
     onEdit: (meal: IMeal)=>void,
     onDelete: (id: number)=>void,
-    onAddToOrder: (meal: IMeal)=>void
+    onAddToOrder: (meal: IMeal, amount: number)=>void
 }) {
     const {t} = useTranslation();
 
     const options = [1,2,3,4,5,6,7,8,9,10];
     const [selectedOptions, setSelectedOptions] = useState<any>({});
 
-    const addToOrder = (meal: IMeal) => {
-        props.onAddToOrder(meal);
+    const addToOrder = (meal: IMeal, index: number) => {
+        props.onAddToOrder(meal, selectedOptions[index]);
         setSelectedOptions({});
     }
 
-    return <div className="table-container">
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:name')}</TableCell>
-                    <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:description')}</TableCell>
-                    <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:price')}</TableCell>
-                    <TableCell align="right" style={{fontWeight: 'bold'}}>
-                        {props.isOwner && <Button  variant="contained" color="secondary" onClick={props.onCreate}>
-                            {t('dashboard:new_meal')}
-                        </Button>}
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {props.list.map((meal: IMeal, i: number)=> {
-                    return <TableRow key={i}>
-                        <TableCell align="center">{meal.name}</TableCell>
-                        <TableCell align="center">{meal.description}</TableCell>
-                        <TableCell align="center">{displayPrice(meal.price)}</TableCell>
-                        <TableCell align="right">
-                            <div>
-                                {props.isOwner && <>
-                                  <Button style={{margin: '0 10px'}} variant="contained" color="primary" onClick={()=>props.onEdit(meal)}>{t('common:edit')}</Button>
-                                  <Button style={{margin: '0 10px'}} variant="outlined" color="primary" onClick={()=>props.onDelete(meal.id)}>{t('common:delete')}</Button>
-                                </>}
-                                {!props.isOwner && <div style={{display: 'flex'}}>
-                                  <Select style={{width: '100%'}} value={selectedOptions[i] ?? ""}
-                                          onChange={(event)=>setSelectedOptions({...selectedOptions, [i]: event.target.value})}>
-                                      {options.map((el,i)=><MenuItem key={i} value={el}>{el}</MenuItem>)}
-                                  </Select>
-                                  <Button color="primary" variant="contained" disabled={!selectedOptions[i]}
-                                          onClick={()=>addToOrder(meal)}>{t('common:add')}</Button>
-                                </div>}
-                            </div>
+    return <div>
+        <div style={{padding: '10px 0', textAlign: 'center', fontSize: '18px'}}>{t('common:restaurant_menu')}</div>
+        <div className="table-container">
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:name')}</TableCell>
+                        <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:description')}</TableCell>
+                        <TableCell align="center" style={{fontWeight: 'bold'}}>{t('meal_form:price')}</TableCell>
+                        <TableCell align="right" style={{fontWeight: 'bold'}}>
+                            {props.isOwner && <Button  variant="contained" color="secondary" onClick={props.onCreate}>
+                                {t('dashboard:new_meal')}
+                            </Button>}
                         </TableCell>
                     </TableRow>
-                })}
-            </TableBody>
-        </Table>
+                </TableHead>
+                <TableBody>
+                    {props.list.map((meal: IMeal, i: number)=> {
+                        return <TableRow key={i}>
+                            <TableCell align="center">{meal.name}</TableCell>
+                            <TableCell align="center">{meal.description}</TableCell>
+                            <TableCell align="center">{displayPrice(meal.price)}</TableCell>
+                            <TableCell align="right">
+                                <div>
+                                    {props.isOwner && <>
+                                      <Button style={{margin: '0 10px'}} variant="contained" color="primary" onClick={()=>props.onEdit(meal)}>{t('common:edit')}</Button>
+                                      <Button style={{margin: '0 10px'}} variant="outlined" color="primary" onClick={()=>props.onDelete(meal.id)}>{t('common:delete')}</Button>
+                                    </>}
+                                    {!props.isOwner && <div style={{display: 'flex'}}>
+                                      <Select style={{width: '100%'}} value={selectedOptions[i] ?? ""}
+                                              onChange={(event)=>setSelectedOptions({...selectedOptions, [i]: event.target.value})}>
+                                          {options.map((el,i)=><MenuItem key={i} value={el}>{el}</MenuItem>)}
+                                      </Select>
+                                      <Button color="primary" variant="contained" disabled={!selectedOptions[i]}
+                                              onClick={()=>addToOrder(meal,i)}>{t('common:add')}</Button>
+                                    </div>}
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    })}
+                </TableBody>
+            </Table>
+        </div>
     </div>
 }

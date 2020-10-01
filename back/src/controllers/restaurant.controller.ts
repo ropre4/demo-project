@@ -14,7 +14,7 @@ import {
 import {SERVICE_TYPE} from "../constants/service.types";
 import {RestaurantService} from "../services/restaurant.service";
 import {RestaurantDTO} from "../dto/restaurantDTO";
-import {authenticateJWT, validateRoleIsOwner} from "./jwt.middleware";
+import {authenticateJWT, validateInfoBelongsToUser, validateRoleIsOwner} from "./jwt.middleware";
 
 @controller("/api/restaurant", authenticateJWT)
 export class RestaurantController {
@@ -30,7 +30,12 @@ export class RestaurantController {
         @response() res: express.Response,
         @request() req: any
     ) {
-        return await this._restaurantService.fetch();
+        try {
+            return await this._restaurantService.fetch();
+        } catch(e) {
+            res.status(500);
+            res.send(e.message);
+        }
     }
     @httpPost("/")
     public async createRestaurant(
@@ -82,11 +87,8 @@ export class RestaurantController {
         @request() req: any,
         @requestParam("ownerId") ownerId: string
     ) {
-        if (ownerId.toString() !== req.user.id.toString()) {
-            res.status(403);
-            res.send(`This user cannot perform this action`);
-        }
         validateRoleIsOwner(req.user, res);
+        validateInfoBelongsToUser(req.user.id, parseInt(ownerId), res);
 
         return await this._restaurantService.findByOwnerId(parseInt(ownerId));
 

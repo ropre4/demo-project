@@ -5,7 +5,6 @@ import {omit} from "ramda";
 import {Meal} from "../entities/meal";
 import {MealDTO} from "../dto/mealDTO";
 import {PaginatedResponse, toPaginatedResponse} from "./restaurant.service";
-import {Restaurant} from "../entities/restaurant";
 
 @injectable()
 export class MealService {

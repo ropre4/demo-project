@@ -12,12 +12,13 @@ export enum OrderStatus {
     DELIVERED = 4,
     RECEIVED = 5
 }
+export const IntialOrderStatus = OrderStatus.PLACED;
 
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn()
     public id!: number;
-    @Column()
+    @Column({ type: 'bigint' })
     public created!: number;
     @Column()
     public creatorId!: number;
@@ -27,7 +28,7 @@ export class Order {
     public restaurantId!: number;
     @Column()
     public restaurantName!: string;
-    @Column()
+    @Column({ type: 'bigint' })
     public lastUpdate!: number;
     @Column()
     public status!: OrderStatus;
