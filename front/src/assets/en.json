@@ -14,8 +14,8 @@
     "add": "Add",
     "restaurant_menu": "Restaurant's Menu",
     "order_details": "Order Details",
+    "order_updates": "Order Updates",
     "details": "Details",
-    "changes": "Changes",
     "block_customer": "Block Customer"
   },
   "header": {
@@ -81,15 +81,19 @@
   },
   "feed_tabs": {
     "restaurants": "Explore Restaurants",
-    "open_orders": "Open Orders",
-    "closed_orders": "Closed Orders"
+    "orders": "My Orders"
+  },
+  "dashboard_tabs": {
+    "restaurants": "My Restaurants",
+    "orders": "Orders"
   },
   "order_table": {
     "restaurant": "Restaurant",
     "status": "Status",
     "placed": "Placed on",
     "last_update": "Last Update",
-    "total": "Total"
+    "total": "Total",
+    "customer": "Customer"
   },
   "order_status": {
     "0": "Placed",
@@ -98,5 +102,12 @@
     "3": "In Route",
     "4": "Delivered",
     "5": "Received"
+  },
+  "order_status_actions": {
+    "cancel": "Cancel this order?",
+    "receive": "Order received?",
+    "process": "Process this order?",
+    "in_route": "Is order In Route?",
+    "deliver": "Is order Delivered?"
   }
 }

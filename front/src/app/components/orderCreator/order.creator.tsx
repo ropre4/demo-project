@@ -7,8 +7,8 @@ import {useQuery} from 'react-query';
 import {MealService} from "../../meal/meal.service";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {IOrder, IOrderLine, Order} from "../../order/order";
-import {OrderDetailsComponent} from "../orderDetails/orderDetails.component";
+import {IOrder, Order} from "../../order/order";
+import {OrderLinesComponent} from "../orderLines/orderLinesComponent";
 import {CreateOrderAction} from "../../order/order.actions";
 
 export function OrderCreator(props: {
@@ -44,7 +44,7 @@ export function OrderCreator(props: {
             onDelete={null}
             onAddToOrder={handleAddToOrder}/>}
             <div style={{height: 50}}/>
-        {order.lines && order.lines.length > 0 && <OrderDetailsComponent
-            onPlaceOrder={()=>handlePlaceOrder(order, props.restaurantId)} order={order} isClient={true}/>}
+        {order.lines && order.lines.length > 0 && <OrderLinesComponent
+            onPlaceOrder={()=>handlePlaceOrder(order, props.restaurantId)} order={order} isCustomer={true}/>}
     </div>
 }

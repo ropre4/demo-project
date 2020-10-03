@@ -27,6 +27,8 @@ export class Order {
     @Column()
     public restaurantId!: number;
     @Column()
+    public restaurantOwnerId!: number;
+    @Column()
     public restaurantName!: string;
     @Column({ type: 'bigint' })
     public lastUpdate!: number;

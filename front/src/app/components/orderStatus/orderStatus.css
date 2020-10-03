@@ -1,0 +1,33 @@
+
+.iconCont {
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    background-color: #6590a6;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iconCont--active {
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    background-color: #FC82B3;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MuiStepContent-root {
+    margin-left: 18px;
+}
+.MuiStepConnector-vertical {
+    margin-left: 18px;
+}
+
+.order-status-label {
+    font-weight: bold;
+    color: #6e6e6e;
+}

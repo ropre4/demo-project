@@ -1,9 +1,13 @@
 import {all, call, put, fork, takeLatest} from 'redux-saga/effects'
 import {
+    BlockUserAction,
+    BlockUserActionFailure,
+    BlockUserActionSuccess,
     LoginAction,
     LoginActionFailure,
     LoginActionSuccess,
-    RegisterAction, RegisterActionFailure,
+    RegisterAction,
+    RegisterActionFailure,
     RegisterActionSuccess,
     UserActionTypes
 } from "./user.actions";
@@ -20,11 +24,19 @@ function* login(action: LoginAction) {
 }
 function* register(action: RegisterAction) {
     try {
-        const response = yield call(UserService.register, action.user);
+        yield call(UserService.register, action.user);
         yield put(new RegisterActionSuccess());
         action.done();
     } catch (error) {
         yield put(new RegisterActionFailure(error));
+    }
+}
+function* blockUser(action: BlockUserAction) {
+    try {
+        yield call(UserService.blockUser, action.userId);
+        yield put(new BlockUserActionSuccess());
+    } catch (error) {
+        yield put(new BlockUserActionFailure(error));
     }
 }
 
@@ -34,10 +46,14 @@ function* watchLogin() {
 function* watchRegister() {
     yield takeLatest(UserActionTypes.REGISTER, register);
 }
+function* watchUserBlock() {
+    yield takeLatest(UserActionTypes.BLOCK_USER, blockUser);
+}
 
 export default function* userSaga() {
     yield all([
         fork(watchLogin),
-        fork(watchRegister)
+        fork(watchRegister),
+        fork(watchUserBlock)
     ])
 };

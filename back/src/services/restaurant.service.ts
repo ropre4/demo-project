@@ -23,8 +23,10 @@ export class RestaurantService {
         this._restaurantRepository = restaurantRepository;
     }
 
-    public async fetch(): Promise<PaginatedResponse<Restaurant>> {
-        const response =  await this._restaurantRepository.findAndCount();
+    public async fetch(ownersToExclude: number[]): Promise<PaginatedResponse<Restaurant>> {
+        const query = this._restaurantRepository.createQueryBuilder('r');
+        if(ownersToExclude.length >0) query.where("r.ownerId NOT IN (" + ownersToExclude.join(",") + ")");
+        const response =  await query.getManyAndCount();
         return toPaginatedResponse(response);
     }
 
@@ -55,11 +57,11 @@ export class RestaurantService {
         });
         return toPaginatedResponse(response);
     }
-    public async findById(restaurantId: number): Promise<Restaurant> {
-        const response =  await this._restaurantRepository.findOneOrFail({
-            id: restaurantId
-        });
-        return response;
+    public async findById(restaurantId: number, ownersToExclude: number[]): Promise<Restaurant> {
+        const query = this._restaurantRepository.createQueryBuilder('r')
+            .where("r.id = " + restaurantId);
+        if(ownersToExclude.length >0) query.where("r.ownerId NOT IN (" + ownersToExclude.join(",") + ")");
+        return await query.getOne();
     }
     private async validateIsOwner(userId: number, restaurantId: number): Promise<Restaurant> {
         const fromDB: Restaurant = await this._restaurantRepository.findOneOrFail({id: restaurantId});

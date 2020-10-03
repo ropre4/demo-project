@@ -9,5 +9,5 @@ export const setPrice = (price: string): number => {
 }
 
 export const displayDate = (timestamp: number): string => {
-    return moment.unix(timestamp/1000).format("MM/DD/YYYY")
+    return moment.unix(timestamp/1000).format("MM/DD/YYYY HH:mm")
 }

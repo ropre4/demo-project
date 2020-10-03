@@ -14,15 +14,24 @@ import {
 import {SERVICE_TYPE} from "../constants/service.types";
 import {RestaurantService} from "../services/restaurant.service";
 import {RestaurantDTO} from "../dto/restaurantDTO";
-import {authenticateJWT, validateInfoBelongsToUser, validateRoleIsOwner} from "./jwt.middleware";
+import {
+    authenticateJWT,
+    validateInfoBelongsToUser,
+    validateRoleIsCustomer,
+    validateRoleIsOwner
+} from "./jwt.middleware";
+import {UserBlockService} from "../services/userBlock.service";
 
 @controller("/api/restaurant", authenticateJWT)
 export class RestaurantController {
     private readonly _restaurantService: RestaurantService;
+    private readonly _userBlockService: UserBlockService;
     public constructor(
-        @inject(SERVICE_TYPE.RestaurantService) restaurantService: RestaurantService
+        @inject(SERVICE_TYPE.RestaurantService) restaurantService: RestaurantService,
+        @inject(SERVICE_TYPE.UserBlockService) userBlockService: UserBlockService
     ) {
         this._restaurantService = restaurantService;
+        this._userBlockService = userBlockService;
     }
 
     @httpGet("/")
@@ -31,7 +40,9 @@ export class RestaurantController {
         @request() req: any
     ) {
         try {
-            return await this._restaurantService.fetch();
+            validateRoleIsCustomer(req.user, res);
+            const blocks = await this._userBlockService.findByUserId(req.user.id);
+            return await this._restaurantService.fetch(blocks.map(bl=>bl.ownerId));
         } catch(e) {
             res.status(500);
             res.send(e.message);

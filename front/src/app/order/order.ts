@@ -21,6 +21,7 @@ export interface IOrder {
     status?: OrderStatus,
     total: number,
     lines: IOrderLine[]
+    history?: IOrderStatusHistory[]
 }
 
 export interface IOrderLine {
@@ -30,6 +31,13 @@ export interface IOrderLine {
     price: number,
     mealId: number,
     mealName: string
+}
+
+export interface IOrderStatusHistory {
+    id?: number,
+    orderId?: number,
+    newStatus: OrderStatus,
+    created: number
 }
 
 export class Order {

@@ -22,6 +22,10 @@ export enum UserActionTypes {
     REGISTER = "REGISTER",
     REGISTER_SUCCESS = "REGISTER_SUCCESS",
     REGISTER_FAILURE = "REGISTER_FAILURE",
+
+    BLOCK_USER = "BLOCK_USER",
+    BLOCK_USER_SUCCESS = "BLOCK_USER_SUCCESS",
+    BLOCK_USER_FAILURE = "BLOCK_USER_FAILURE"
 }
 
 export class LoginAction implements IAction {
@@ -52,6 +56,20 @@ export class RegisterActionSuccess implements IAction {
 }
 export class RegisterActionFailure extends FailureAction implements IAction {
     public readonly type = UserActionTypes.REGISTER_FAILURE;
+    constructor(public error: any) {
+        super(error);
+    }
+}
+
+export class BlockUserAction implements IAction {
+    public readonly type = UserActionTypes.BLOCK_USER;
+    constructor(public userId: number) {}
+}
+export class BlockUserActionSuccess implements IAction {
+    public readonly type = UserActionTypes.BLOCK_USER_SUCCESS;
+}
+export class BlockUserActionFailure extends FailureAction implements IAction {
+    public readonly type = UserActionTypes.BLOCK_USER_FAILURE;
     constructor(public error: any) {
         super(error);
     }

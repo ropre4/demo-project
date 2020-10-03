@@ -20,9 +20,9 @@ import {MealDTO} from "../dto/mealDTO";
 export class MealController {
     private readonly _mealService: MealService;
     public constructor(
-        @inject(SERVICE_TYPE.MealService) restaurantService: MealService
+        @inject(SERVICE_TYPE.MealService) mealService: MealService
     ) {
-        this._mealService = restaurantService;
+        this._mealService = mealService;
     }
 
     @httpPost("/")

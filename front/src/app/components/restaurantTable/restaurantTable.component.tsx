@@ -12,6 +12,7 @@ export function RestaurantTableComponent(props: {
     onViewMenu: (id: number)=>void,
     isOwner: boolean,
     onEdit: (res: IRestaurant)=>void,
+    onCreate: ()=>void,
     onDelete: (id: number)=>void,
 }) {
     const {t} = useTranslation();
@@ -23,7 +24,11 @@ export function RestaurantTableComponent(props: {
                     <TableCell align="center" style={{fontWeight: 'bold'}}>{t('restaurant_form:name')}</TableCell>
                     <TableCell align="center" style={{fontWeight: 'bold'}}>{t('restaurant_form:description')}</TableCell>
                     <TableCell align="center" style={{fontWeight: 'bold'}}>{t('restaurant_form:cuisineType')}</TableCell>
-                    <TableCell align="right" style={{fontWeight: 'bold'}}/>
+                    <TableCell align="right" style={{fontWeight: 'bold'}}>
+                        {props.isOwner && <Button  variant="contained" color="secondary" onClick={props.onCreate}>
+                            {t('dashboard:new_restaurant')}
+                        </Button>}
+                    </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

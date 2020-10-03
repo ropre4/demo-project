@@ -21,6 +21,9 @@ import {OrderLine} from "./entities/orderLine";
 import {getOrderLineRepository} from "./repositories/orderLine.repository";
 import {OrderStatusHistory} from "./entities/orderStatusHistory";
 import {getOrderStatusHistoryRepository} from "./repositories/orderStatusHistory";
+import {UserBlockService} from "./services/userBlock.service";
+import {UserBlock} from "./entities/userBlock";
+import {getUserBlockRepository} from "./repositories/userBlock.repository";
 
 export const bindings = new AsyncContainerModule(async (bind) => {
 
@@ -31,11 +34,13 @@ export const bindings = new AsyncContainerModule(async (bind) => {
     await require("./controllers/restaurant.controller");
     await require("./controllers/meal.controller");
     await require("./controllers/order.controller");
+    await require("./controllers/userBlock.controller");
     //Services
     bind<UserService>(SERVICE_TYPE.UserService).to(UserService).inSingletonScope();
     bind<RestaurantService>(SERVICE_TYPE.RestaurantService).to(RestaurantService).inSingletonScope();
     bind<MealService>(SERVICE_TYPE.MealService).to(MealService).inSingletonScope();
     bind<OrderService>(SERVICE_TYPE.OrderService).to(OrderService).inSingletonScope();
+    bind<UserBlockService>(SERVICE_TYPE.UserBlockService).to(UserBlockService).inSingletonScope();
     //Repositories
     bind<Repository<Movie>>(REPOSITORY_TYPE.MovieRepository).toDynamicValue(getRepository).inRequestScope();
     bind<Repository<User>>(REPOSITORY_TYPE.UserRepository).toDynamicValue(getUserRepository).inRequestScope();
@@ -44,5 +49,6 @@ export const bindings = new AsyncContainerModule(async (bind) => {
     bind<Repository<Order>>(REPOSITORY_TYPE.OrderRepository).toDynamicValue(getOrderRepository).inRequestScope();
     bind<Repository<OrderLine>>(REPOSITORY_TYPE.OrderLineRepository).toDynamicValue(getOrderLineRepository).inRequestScope();
     bind<Repository<OrderStatusHistory>>(REPOSITORY_TYPE.OrderStatusHistoryRepository).toDynamicValue(getOrderStatusHistoryRepository).inRequestScope();
+    bind<Repository<UserBlock>>(REPOSITORY_TYPE.UserBlockRepository).toDynamicValue(getUserBlockRepository).inRequestScope();
 
 });
