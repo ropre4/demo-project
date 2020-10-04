@@ -67,4 +67,6 @@ export class Order {
             total: updatedLines.reduce((a, b)=>a+(b.amount*b.price),0)
         }
     }
+
+
 }

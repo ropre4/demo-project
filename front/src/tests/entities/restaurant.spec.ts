@@ -15,6 +15,8 @@ describe("given RestaurantForm", () => {
             const sut = RestaurantForm.InitForm();
             expect(sut.id).toEqual(null);
             expect(sut.cuisineType).toEqual(null);
+            expect(sut.description).toEqual("");
+            expect(sut.name).toEqual("");
         });
     });
     describe("when InitForm is called with existing values", () => {
@@ -28,6 +30,14 @@ describe("given RestaurantForm", () => {
         it("should set all errors to false", () => {
             const sut = RestaurantForm.InitErrors();
             expect(findIndex(el=>el!==false)(values(sut))).toEqual(-1);
+        });
+    });
+    describe("when ValidateRestaurantForm", () => {
+        it("should validate mandatory fields are not empty", () => {
+            const initRestaurant = RestaurantForm.InitForm();
+            const sut = RestaurantForm.ValidateRestaurantForm(initRestaurant);
+            expect(sut.name).toEqual(true);
+            expect(sut.description).toEqual(true);
         });
     });
     describe("when ValidateRestaurantForm", () => {

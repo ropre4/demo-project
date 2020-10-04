@@ -15,6 +15,16 @@ describe("given RegisterUser", () => {
         });
     });
     describe("when ValidateRegisterUser", () => {
+        it("should validate mandatory fields are not empty", () => {
+            const initUser = RegisterUser.InitRegisterUser();
+            const sut = RegisterUser.ValidateRegisterUser(initUser);
+            expect(sut.name).toEqual(true);
+            expect(sut.surname).toEqual(true);
+            expect(sut.email).toEqual(true);
+            expect(sut.password).toEqual(true);
+        });
+    });
+    describe("when ValidateRegisterUser", () => {
         it("should validate passwords match", () => {
             const initUser = RegisterUser.InitRegisterUser();
             const sut = RegisterUser.ValidateRegisterUser({
