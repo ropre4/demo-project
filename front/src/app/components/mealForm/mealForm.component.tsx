@@ -54,7 +54,7 @@ export function MealFormComponent(props: {onSubmit: Function, onCancel: Function
             <Grid container className="form-item">
                 <Grid item sm={4} className="form-label">{t('meal_form:price')}:</Grid>
                 <Grid item sm={8}>
-                    <InputComponent type="number" label={"$"} error={errors.price} initialValue={displayPrice(meal.price)}
+                    <InputComponent type="number" label={"$"} error={errors.price} initialValue={meal.price/100}
                                     onChange={(value)=>setMeal({...meal, price: value ? setPrice(value) : null})}/>
                 </Grid>
             </Grid>
