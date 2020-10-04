@@ -5,6 +5,7 @@ export interface RegisterUserDTO {
     surname: string,
     email: string,
     password: string,
+    repeatPassword: string,
     role: UserRole
 }
 

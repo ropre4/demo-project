@@ -15,14 +15,19 @@ import {SERVICE_TYPE} from "../constants/service.types";
 import {MealService} from "../services/meal.service";
 import {authenticateJWT, validateRoleIsOwner} from "./jwt.middleware";
 import {MealDTO} from "../dto/mealDTO";
+import {RestaurantService} from "../services/restaurant.service";
 
 @controller("/api/restaurant/:restaurantId/meal", authenticateJWT)
 export class MealController {
     private readonly _mealService: MealService;
+    private readonly _restaurantService: RestaurantService;
+
     public constructor(
-        @inject(SERVICE_TYPE.MealService) mealService: MealService
+        @inject(SERVICE_TYPE.MealService) mealService: MealService,
+        @inject(SERVICE_TYPE.RestaurantService) restaurantService: RestaurantService
     ) {
         this._mealService = mealService;
+        this._restaurantService = restaurantService;
     }
 
     @httpPost("/")
@@ -34,6 +39,11 @@ export class MealController {
     ) {
         validateRoleIsOwner(req.user, res);
         try {
+            const restaurant = await this._restaurantService.findById(parseInt(restaurantId), []);
+            if(restaurant.ownerId !== req.user.id) {
+                res.status(403);
+                return res.send(`This restaurant belongs to another Owner`);
+            }
             return await this._mealService.create(newMeal, req.user.id, parseInt(restaurantId));
         } catch(e) {
             res.status(500);

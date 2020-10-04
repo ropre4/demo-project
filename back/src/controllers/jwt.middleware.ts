@@ -26,18 +26,18 @@ export const authenticateJWT = (req, res, next) => {
 export function validateRoleIsOwner(user, res) {
     if (user.role !== UserRole.RESTAURANT_OWNER) {
         res.status(403);
-        res.send(`User must be a Restaurant owner`);
+        return res.send(`User must be a Restaurant owner`);
     }
 }
 export function validateRoleIsCustomer(user, res) {
     if (user.role !== UserRole.CUSTOMER) {
         res.status(403);
-        res.send(`User must be a Customer`);
+        return res.send(`User must be a Customer`);
     }
 }
 export function validateInfoBelongsToUser(requestorId: number, ownerId: number, res) {
     if (requestorId !== ownerId) {
         res.status(403);
-        res.send(`This information belongs to another user`);
+        return res.send(`This information belongs to another user`);
     }
 }

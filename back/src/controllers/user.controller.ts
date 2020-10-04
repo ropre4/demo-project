@@ -2,14 +2,13 @@ import * as express from "express";
 import { inject } from "inversify";
 import {
     controller,
-    httpGet,
     httpPost,
     response,
     requestBody
 } from "inversify-express-utils";
 import {UserService} from "../services/user.service";
 import {SERVICE_TYPE} from "../constants/service.types";
-import {RegisterUserDTO} from "../dto/userDTO";
+import {LoginUserDTO, RegisterUserDTO} from "../dto/userDTO";
 import {generateToken} from "./jwt.middleware";
 
 @controller("/api/user")
@@ -36,7 +35,7 @@ export class UserController {
     @httpPost("/login")
     public async login(
         @response() res: express.Response,
-        @requestBody() newUser: RegisterUserDTO
+        @requestBody() newUser: LoginUserDTO
     ) {
         try {
             const safeUser = await this._userService.login(newUser);

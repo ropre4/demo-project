@@ -17,6 +17,8 @@ export class UserService {
     }
 
     public async register(user: RegisterUserDTO): Promise<User> {
+        if(user.password !== user.repeatPassword) throw new Error('passwords must match');
+
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(user.password, salt);
         return await this._userRepository.save({

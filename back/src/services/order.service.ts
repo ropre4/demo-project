@@ -140,7 +140,7 @@ export class OrderService {
 
         const indexedMeals: {[key: string]: Meal} = indexBy(prop('id'), meals);
         const total: number = order.lines.reduce((acc: number, line: OrderLineDTO)=>{
-            if(line.price !== indexedMeals[line.mealId].price) {
+            if(!indexedMeals[line.mealId] || line.price !== indexedMeals[line.mealId].price) {
                 throw new Error("Prices are out of sync. Please review your order");
             }
             return acc + (line.amount * line.price);

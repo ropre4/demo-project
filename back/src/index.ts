@@ -7,7 +7,7 @@ import * as cors from "cors";
 
 (async () => {
 
-    const port = 3001;
+    const port = process.env.APP_ENV === 'e2e' ? 3002 : 3001;
     const container = new Container();
     await container.loadAsync(bindings);
     const app = new InversifyExpressServer(container);
